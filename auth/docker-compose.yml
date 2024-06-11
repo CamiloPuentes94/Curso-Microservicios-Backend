@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  backend_auth:
+    container_name: backend_auth_container
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+
+  #event Queue Kafka
+  # queue_auth:
+  #   build: .
+  #   command: >
+  #     sh -c "pyhton consumer.py"
+  #   depends_on:
+  #     - db
+
+  db:
+    image: postgres
+    container_name: django_auth_api_postgresql
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Samimajo10
+      POSTGRES_DB: auth_db
+    ports:
+      - 5432:5432
+    volumes:
+      - .dbdata:/var/lib/postgresql
+
+  redis:
+    image: redis
+    container_name: django_auth_api_redis
+    ports:
+      - 6379:6379
