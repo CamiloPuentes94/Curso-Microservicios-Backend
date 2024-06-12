@@ -11,13 +11,13 @@ services:
       - db
       - redis
 
-  #event Queue Kafka
-  # queue_auth:
-  #   build: .
-  #   command: >
-  #     sh -c "pyhton consumer.py"
-  #   depends_on:
-  #     - db
+  # event Queue Kafka
+  queue_auth:
+    build: .
+    command: >
+      sh -c "python consumer.py"
+    depends_on:
+      - db
 
   db:
     image: postgres
